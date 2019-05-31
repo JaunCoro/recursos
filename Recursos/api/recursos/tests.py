@@ -20,7 +20,7 @@ class BaseViewTest(APITestCase):
 class GetAllMaaterial(BaseViewTest):
     def test_get_all_material(self):
         response = self.client.get(
-            reverse("material-all", kwargs={"version":"v1"})
+            reverse("recuesos", kwargs={"version":"v1"})
         )
 
         expected = Materiales.objects.all()

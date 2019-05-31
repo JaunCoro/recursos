@@ -19,18 +19,18 @@ class User(models.Model):
 	rol = models.CharField(max_length = 2, choices = Rol_CHOICES, default=ALUMNO)
 
 class Categoria(models.Model):
+	def __str__(self):
+		return self.name
 	name = models.CharField(max_length = 50)
 
 class Materiales(models.Model):
-	#Constantes del modelo
+	def __str__(self):
+		return self.name
 	name = models.CharField(max_length = 100)
-	categoria = models.CharField(max_length = 50)
+	categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
 	disponibilidad = models.BooleanField(default=True)
 	apartado = models.BooleanField(default=False)
 	img = models.CharField(max_length = 50, default="img.png")
-
-	def __str__(self):
-		return "{} - {}".format(self.name, self.categoria)
 
 class Solicitudes(models.Model):
 	solicitante = models.ForeignKey(User, on_delete=models.CASCADE)
