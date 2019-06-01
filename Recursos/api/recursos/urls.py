@@ -3,5 +3,5 @@ from django.conf.urls import url
 from recursos.views import MaterialViewSet
 
 urlpatterns = [
-    url(r'^materiales/$', MaterialViewSet.as_view(), name="recursos")
+    path('materiales/', MaterialViewSet.as_view(), name="material-list-create")
 ]

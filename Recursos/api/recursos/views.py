@@ -1,7 +1,10 @@
 from django.shortcuts import get_object_or_404
 from recursos.models import Materiales, User
 from rest_framework import generics
+from rest_framework.views import status
+from rest_framework.response import Response
 from recursos.serializers import UserSerializer, MaterialesSerializer
+from recursos.decorators import validate_request_data
 # Create your views here.
 
 class UserViewSet(generics.ListCreateAPIView):
@@ -12,10 +15,13 @@ class MaterialViewSet(generics.ListCreateAPIView):
     queryset = Materiales.objects.all()
     serializer_class = MaterialesSerializer
 
-    def get_object(self):
-        queryset = self.get_queryset()
-        obj  = get_object_or_404(
-            queryset,
-            pk=self.kwargs['pk'],
+    @validate_request_data
+    def post(self, request, *args, **kwargs):
+        a_song = Materiales.objects.create(
+            title=request.data["name"],
+            artist=request.data["Categoria"]
         )
-        return obj
+        return Response(
+            data=MaterialesSerializer(a_song).data,
+            status=status.HTTP_201_CREATED
+        )
