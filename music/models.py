@@ -21,9 +21,9 @@ class Material(models.Model):
     name = models.CharField(max_length = 100)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     disponibilidad = models.BooleanField(default = True)
-    img = models.CharField(max_length = 150)
+    img = models.FileField(blank=False, null=False)
     def __str__(self):
-        return "{} - {} - {} - {}".format(self.name, self.categoria, self.disponibilidad, self.img)
+        return "{} - {} - {} - {}".format(self.name, self.categoria, self.disponibilidad, self.img.name)
 
 class Request(models.Model):
     #constantes

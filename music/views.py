@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from rest_framework.parsers import FileUploadParser
 
 from rest_framework import generics
 from rest_framework import permissions
@@ -97,6 +98,7 @@ class CategoriasDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ListCreateMaterialView(generics.ListCreateAPIView):
     queryset = Material.objects.all()
     serializer_class = MaterialSerializer
+    parser_classes = (FileUploadParser,)
     permission_classes = (permissions.IsAuthenticated,)
 
     @validate_material_data
@@ -104,7 +106,7 @@ class ListCreateMaterialView(generics.ListCreateAPIView):
         a_material = Material.objects.create(
             name=request.data["name"],
             categoria=Categoria.objects.get(pk = int(request.data["categoria"])),
-            img=request.data["img"]
+            img= request.data["img"]
         )
         return Response(
             data=MaterialSerializer(a_material).data,
