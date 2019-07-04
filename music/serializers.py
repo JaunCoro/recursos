@@ -61,7 +61,7 @@ class TokenSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("pk", "username", "email", "password")
+        fields = '__all__'
 
     def update(self, instance, validated_data):
         instance.username = validated_data.get("username", instance.username)
